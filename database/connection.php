@@ -11,7 +11,7 @@
 
     class dbConnection{
         protected function connection(){
-            $con = new PDO(SGBD, USER, PASSWORD);
+            $con = new PDO(SGBD, USER, PASS);
 
             return $con;
         }

@@ -34,7 +34,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr></tr>
+                    <?php
+                        require_once "database/connection.php";
+                        require_once "controllers/queriesController.php";
+
+                        /*Accedemos al método del Controlador*/
+                        $sentence = new Queries();
+                        $data = $sentence -> selectTasks();
+
+                        foreach($data as $res){
+                            echo "<tr>";
+                            echo "<td>".$res["name"]."</td>";
+                            echo 
+                            "<td class='text-center'>
+                                <button class='btn btn-primary btn-sm'>Editar</button>
+
+                                <button class='btn btn-danger  btn-sm'>Eliminar</button>
+                            </td>";
+                            echo "</td>";
+                        }
+                    ?>
                 </tbody>
             </table>
         </div>
