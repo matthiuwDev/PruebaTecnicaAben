@@ -5,9 +5,12 @@ if (isset($_GET["idTask"])) {
     $idTask = $_GET["idTask"];
 
     $taskController = new TaskController();
-    $taskController->completeTask($idTask);
+    $success = $taskController->completeTask($idTask);
 
-    header("Location: ../index.html");
+    // Configurar el encabezado para devolver JSON
+    header('Content-Type: application/json');
+
+    // Devolver la respuesta JSON
+    echo json_encode(['success' => $success, 'completed' => 1]);
 }
 ?>
-
