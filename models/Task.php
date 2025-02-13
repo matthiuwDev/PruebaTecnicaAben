@@ -1,21 +1,42 @@
 <?php
+require_once '../database/database.php';
 
-require_once "../database/database.php";
-require_once "../controllers/TaskController.php";
+class Task {
+    private $db;
 
-$queryType = $_POST["operation"];
+    public function __construct() {
+        $this->db = Database::getInstance();
+    }
 
-switch ($queryType) {
-    case 'create':
-        $name = $_POST['name'];
-        $query = new TaskController();
-        $execute = $query->createTask($name); 
-        echo json_encode($execute);
+    public function getAllTasks() {
+        $stmt = $this->db->prepare("SELECT * FROM tasks");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-        break;
+    public function addTask($name) {
+        $stmt = $this->db->prepare("INSERT INTO tasks (name) VALUES (:name)");
+        $stmt->bindParam(':name', $name);
+        return $stmt->execute();
+    }
 
-    default:
-        break;
+    public function updateTask($idTask, $name) {
+        $stmt = $this->db->prepare("UPDATE tasks SET name = :name WHERE idTask = :idTask");
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':idTask', $idTask);
+        return $stmt->execute();
+    }
+
+    public function completeTask($idTask) {
+        $stmt = $this->db->prepare("UPDATE tasks SET completed = 1 WHERE idTask = :idTask");
+        $stmt->bindParam(':idTask', $idTask);
+        return $stmt->execute();
+    }
+
+    public function deleteTask($idTask) {
+        $stmt = $this->db->prepare("DELETE FROM tasks WHERE idTask = :idTask");
+        $stmt->bindParam(':idTask', $idTask);
+        return $stmt->execute();
+    }
 }
-
 ?>

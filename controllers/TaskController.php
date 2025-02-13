@@ -1,26 +1,31 @@
 <?php
-    /*Clase para acceder y ejecutar Consultas*/
-    class TaskController extends dbConnection{
-        //Método para Obtener todas las tareas
-        public function selectTasks(){
-            $sqlRead = dbConnection::connection()->prepare("SELECT * FROM tasks");
+require_once '../models/Task.php';
 
-            $sqlRead -> execute();
+class TaskController {
+    private $taskModel;
 
-            //Traemos Info de tareas desde la DB
-            return $array = $sqlRead -> fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        //Método para Crear una tarea
-        public function createTask($name){
-            $sqlCreate = dbConnection::connection()->prepare( "INSERT INTO  tasks(name) VALUES ('$name') ");
-
-            if($sqlCreate -> execute()){
-                //Si '$sqlCreate' se ejecuta con exito llamamos al método 'selectTask'
-                $result = self::selectTasks();
-
-                return $result;
-            }
-        }
+    public function __construct() {
+        $this->taskModel = new Task();
     }
-?> 
+
+    public function getTasks() {
+        return $this->taskModel->getAllTasks();
+    }
+
+    public function addTask($name) {
+        return $this->taskModel->addTask($name);
+    }
+
+    public function updateTask($idTask, $name) {
+        return $this->taskModel->updateTask($idTask, $name);
+    }
+
+    public function completeTask($idTask) {
+        return $this->taskModel->completeTask($idTask);
+    }
+
+    public function deleteTask($idTask) {
+        return $this->taskModel->deleteTask($idTask);
+    }
+}
+?>
