@@ -11,8 +11,9 @@
         <div class="container">
             <section class="mt-4">
                 <h1>Lista de Tareas</h1>
-                <form action="">
+                <form action="" id="form">
                     <div class="row">
+                        <input type="text" name="operation" value="create" hidden="true">
                         <div class="col-md-4">
                             <input type="text" name="name" id="name" class="form-control" placeholder="Ingresa el nombre de la tarea">
                         </div>
@@ -26,7 +27,7 @@
         </div>
 
         <div class="container mt-5">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="tasksTable">
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -35,11 +36,11 @@
                 </thead>
                 <tbody>
                     <?php
-                        require_once "database/connection.php";
-                        require_once "controllers/queriesController.php";
+                        require_once "database/database.php";
+                        require_once "controllers/TaskController.php";
 
                         /*Accedemos al método del Controlador*/
-                        $sentence = new Queries();
+                        $sentence = new TaskController();
                         $data = $sentence -> selectTasks();
 
                         foreach($data as $res){
@@ -58,5 +59,7 @@
             </table>
         </div>
     </main>
+
+    <script src="js/function.js"></script>
 </body>
 </html>
