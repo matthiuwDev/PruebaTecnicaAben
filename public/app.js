@@ -69,6 +69,8 @@ async function fetchTasks() {
 
 
 //Función para Crear una tarea
+//Al presionar el botón "Agregar", se desactiva el comportamiento por defecto del navegador y se hace...
+//un llamado a esta función
 async function addTask() {
     const taskInput = document.getElementById('task');
     const task = taskInput.value.trim();

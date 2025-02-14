@@ -1,4 +1,10 @@
 <?php
+    /**
+     * Controlador de Tareas. Este Controlador recibe los datos provenientes del Script 
+     * y mediante la instancia creada del Modelo, transmite los datos a los métodos
+     * correspondientes de este último
+    */
+
 require_once '../models/Task.php';
 
 class TaskController {

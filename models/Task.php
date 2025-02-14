@@ -1,4 +1,9 @@
 <?php
+    /**
+     * Modelo de Tareas. Este Modelo recibe los datos provenientes del Controlador 
+     * y mediante la instancia creada de la base de datos, se encarga de interactuar
+     * y hacer las respectivas consultas con los datos recibidos.
+    */
 require_once '../database/database.php';
 
 class Task {
