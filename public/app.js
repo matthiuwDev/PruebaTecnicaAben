@@ -43,25 +43,29 @@ async function request(url, method = 'GET', body = null) {
 //Función asíncrona para Obtener las tareas y mostrarlas en el index.HTML
 async function fetchTasks() {
     const tasks = await request('public/getTasks.php');
-    //Validamos cantidad de tareas y mostramos mensaje en caso de no haber
     if (!tasks || tasks.length === 0) {
         document.getElementById('task-list').innerHTML = `<tr><td colspan="2" class="text-center">No hay tareas disponibles</td></tr>`;
         return;
     }
 
-    //
     document.getElementById('task-list').innerHTML = tasks.map(task => `
         <tr>
-            <!-- Verificamos si el atributo es true (1), y en caso de serlo asignamos la clase 'completed' -->
+
+        <!-- Verificamos si el atributo es true (1), y en caso de serlo asignamos la clase 'completed' -->
+        <!-- Así mismo, este atributo determina la interactividad de los botones -->
+        <!-- Si el atributo es true, deshabilitamos los botones ya que la tarea ya está completada -->
+
             <td class="${task.completed ? 'completed' : ''}">${task.name}</td>
             <td>
-                <button class="btn btn-warning me-2" onclick="updateTask(${task.idTask}, '${task.name.replace(/'/g, "\\'")}')">Actualizar</button>
-                <button class="btn btn-success me-2" onclick="completeTask(${task.idTask})">Completar</button>
+                <button class="btn btn-warning me-2" onclick="${task.completed ? '' : `updateTask(${task.idTask}, '${task.name.replace(/'/g, "\\'")}')`}" ${task.completed ? 'disabled' : ''}>Actualizar</button>
+                
+                <button class="btn btn-success me-2" onclick="${task.completed ? '' : `completeTask(${task.idTask})`}" ${task.completed ? 'disabled' : ''}>Completar</button>
                 <button class="btn btn-danger" onclick="deleteTask(${task.idTask})">Eliminar</button>
             </td>
         </tr>
     `).join('');
 }
+
 
 
 //Función para Crear una tarea
